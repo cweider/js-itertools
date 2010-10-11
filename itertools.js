@@ -339,17 +339,26 @@ var slice = function () {
 var map = function () {
     var _iterator = new _Iterator();
     var mapping = arguments[0];
-    var iterators = [];
-    for (var i = 1, ii = arguments.length; i < ii; i++) {
-        iterators[i-1] = makeIteratorOf(arguments[i])
-    }
-    var iterator = zip.apply(this, iterators)
+    var iterator;
 
     _iterator.type = 'map';
-    _iterator.next = function () {
-        var value = iterator.next();
-        return mapping ? mapping.apply(this, value) : value;
-    };
+
+    if (arguments.length == 2) {
+        var iterator = makeIteratorOf(arguments[1]);
+        _iterator.next = function ()  {
+            return mapping ? mapping(iterator.next()) : value;
+        };
+    } else {
+        var iterators = [];
+        for (var i = 1, ii = arguments.length; i < ii; i++) {
+            iterators[i-1] = makeIteratorOf(arguments[i])
+        }
+        iterator = zip.apply(this, iterators)
+        _iterator.next = function () {
+            var value = iterator.next();
+            return mapping ? mapping.apply(this, value) : value;
+        };
+    }
 
     return _iterator;
 };

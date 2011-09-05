@@ -26,7 +26,7 @@ _Iterator.prototype = {
     }
 };
 
-var makeIteratorOf = function (object) {
+function makeIteratorOf(object) {
     if (object == null) {
         object = [];
     } else if (arguments.length > 1) {
@@ -44,7 +44,7 @@ var makeIteratorOf = function (object) {
     }
 };
 
-var fromArray = function (array) {
+function fromArray(array) {
     var _iterator = new _Iterator();
     var _array = array.concat();
     var i = 0, ii = _array.length;
@@ -61,7 +61,7 @@ var fromArray = function (array) {
     return _iterator;
 };
 
-var toArray = function (iterator) {
+function toArray(iterator) {
     var i = 0;
     var array = [];
     try {
@@ -76,7 +76,7 @@ var toArray = function (iterator) {
     return array;
 };
 
-var fromString = function (string) {
+function fromString(string) {
     var _iterator = new _Iterator();
     var i = 0, ii = string.length;
 
@@ -92,7 +92,7 @@ var fromString = function (string) {
     return _iterator;
 };
 
-var fromObject = function (object) {
+function fromObject(object) {
     var pairs = [];
     for (var key in object) {
         if (Object.prototype.hasOwnProperty.call(object, key)) {
@@ -103,7 +103,7 @@ var fromObject = function (object) {
     return fromArray(pairs);
 };
 
-var count = function (start, step) {
+function count(start, step) {
     var _iterator = new _Iterator();
     step = typeof step == 'number' ? step : 1;
 
@@ -117,7 +117,7 @@ var count = function (start, step) {
     return _iterator;
 };
 
-var cycle = function (iterable) {
+function cycle(iterable) {
     var iterator = makeIteratorOf(iterable);
     var _iterator = new _Iterator();
     var values = [];
@@ -154,7 +154,7 @@ var cycle = function (iterable) {
     return _iterator;
 };
 
-var repeat = function (value, times) {
+function repeat(value, times) {
     var _iterator = new _Iterator();
     var i = 0;
 
@@ -172,7 +172,7 @@ var repeat = function (value, times) {
     return _iterator;
 };
 
-var chain = function () {
+function chain() {
     var _iterator = new _Iterator();
     var iterators = _arrayForArguments(arguments);
     var iterator;
@@ -202,7 +202,7 @@ var chain = function () {
     return _iterator;
 };
 
-var dropWhile = function (test, iterable) {
+function dropWhile(test, iterable) {
     var iterator = makeIteratorOf(iterable);
     var _iterator = new _Iterator();
     var performedDrop = false;
@@ -226,7 +226,7 @@ var dropWhile = function (test, iterable) {
     return _iterator;
 };
 
-var takeWhile = function (test, iterable) {
+function takeWhile(test, iterable) {
     var iterator = makeIteratorOf(iterable);
     var _iterator = new _Iterator();
     var performedTake = false;
@@ -252,7 +252,7 @@ var takeWhile = function (test, iterable) {
     return _iterator;
 };
 
-var filter = function (test, iterable) {
+function filter(test, iterable) {
     var iterator = makeIteratorOf(iterable);
     var _iterator = new _Iterator();
     test = test || function (x) {return x;};
@@ -269,7 +269,7 @@ var filter = function (test, iterable) {
     return _iterator;
 };
 
-var slice = function () {
+function slice() {
     var _iterator = new _Iterator();
     var iterator = makeIteratorOf(arguments[0]);
     var start, stop, step;
@@ -340,7 +340,7 @@ var slice = function () {
     return _iterator;
 };
 
-var map = function () {
+function map() {
     var _iterator = new _Iterator();
     var mapping = arguments[0];
     var iterator;
@@ -367,7 +367,7 @@ var map = function () {
     return _iterator;
 };
 
-var tee = function (iterable, n) {
+function tee(iterable, n) {
     var iterator = makeIteratorOf(iterable);
     var nextsList = [];
     var iterators = [];
@@ -410,7 +410,7 @@ var tee = function (iterable, n) {
     return iterators;
 };
 
-var zip = function () {
+function zip() {
     var _iterator = new _Iterator();
     var iterators = [];
     for (var i = 0, ii = arguments.length; i < ii; i++) {
@@ -429,7 +429,7 @@ var zip = function () {
     return _iterator;
 };
 
-var zipLongest = function () {
+function zipLongest() {
     var _iterator = new _Iterator();
     var iterators = [];
     for (var i = 0, ii = arguments.length; i < ii; i++) {
@@ -464,7 +464,7 @@ var zipLongest = function () {
     return _iterator;
 };
 
-var roundrobin = function () {
+function roundrobin() {
     var _iterator = new _Iterator();
     var iterators = [];
     for (var i = 0, ii = arguments.length; i < ii; i++) {
@@ -495,7 +495,7 @@ var roundrobin = function () {
     return _iterator;
 };
 
-var all = function (iterable) {
+function all(iterable) {
     var iterator = makeIteratorOf(iterable);
     try {
         while (iterator.next()) {;}
@@ -507,7 +507,7 @@ var all = function (iterable) {
     }
     return true;
 };
-var some = function (iterable, count) {
+function some(iterable, count) {
     var iterator = makeIteratorOf(iterable);
 
     if (!(count > 0)) {
@@ -524,7 +524,7 @@ var some = function (iterable, count) {
     }
     return false;
 };
-var any = function (iterable) {
+function any(iterable) {
     var iterator = makeIteratorOf(iterable);
     try {
         while (!iterator.next()) { }
@@ -537,7 +537,7 @@ var any = function (iterable) {
     return false;
 };
 
-var reduce = function (func, iterable, init) {
+function reduce(func, iterable, init) {
     var iterator = makeIteratorOf(iterable);
     var result, value;
     try {

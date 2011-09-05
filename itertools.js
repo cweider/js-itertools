@@ -10,6 +10,10 @@
 
 var _StopIteration = typeof StopIteration != 'undefined' ? StopIteration : "StopIteration";
 
+function _arrayForArguments(args) {
+  return Array.prototype.slice.call(args);
+}
+
 var _Iterator = function () {
 };
 
@@ -26,7 +30,7 @@ var makeIteratorOf = function (object) {
     if (object == null) {
         object = [];
     } else if (arguments.length > 1) {
-        object = Array.prototype.slice.call(arguments);
+        object = _arrayForArguments(arguments);
     }
 
     if (object.__iterator__) {
@@ -170,7 +174,7 @@ var repeat = function (value, times) {
 
 var chain = function () {
     var _iterator = new _Iterator();
-    var iterators = Array.prototype.slice.call(arguments);
+    var iterators = _arrayForArguments(arguments);
     var iterator;
     if (iterators.length == 0) {
         return fromArray([]);

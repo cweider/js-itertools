@@ -579,6 +579,7 @@ function reduce(func, iterable, init) {
 
 exports.Iterator = makeIteratorOf;
 exports.Array = toArray;
+exports.StopIteration = _StopIteration;
 
 exports.count = count;
 exports.cycle = cycle;

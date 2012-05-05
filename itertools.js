@@ -15,6 +15,11 @@ __StopIteration.prototype = new Error();
 
 var _StopIteration = typeof StopIteration != 'undefined' ? StopIteration : __StopIteration;
 
+function ArgumentError() {
+  Error.apply(this, arguments);
+}
+ArgumentError.prototype = new Error();
+
 function _arrayForArguments(args) {
   return Array.prototype.slice.call(args);
 }
@@ -309,18 +314,18 @@ function slice() {
         stop = arguments[2];
         step = arguments[3];
     } else {
-        throw new Error("Argument Error: Stop must be specified.");
+        throw new ArgumentError("Stop must be specified.");
     }
     var i = 1;
 
     if (!(start > -1)) {
-        throw new Error("Argument Error: Start, must be a non-negative integer.");
+        throw new ArgumentError("Start, must be a non-negative integer.");
     }
     if (stop && !(stop > -1)) {
-        throw new Error("Argument Error: Step, if defined, must be a non-negative integer.");
+        throw new ArgumentError("Step, if defined, must be a non-negative integer.");
     }
     if (!(step > 0)) {
-        throw new Error("Argument Error: Step, if defined, must be a positive integer.");
+        throw new ArgumentError("Step, if defined, must be a positive integer.");
     }
 
     var skip = function (n) {
@@ -398,7 +403,7 @@ function tee(iterable, n) {
     if (n === undefined) {
         n = 2;
     } else if (!(n > 0)) {
-        throw new Error("Argument Error: The number of tees, if specified must be a positive number.");
+        throw new ArgumentError("The number of tees, if specified must be a positive number.");
     }
 
     var getNextForIterator = function (i) {
@@ -534,7 +539,7 @@ function some(iterable, count) {
     var iterator = makeIteratorOf(iterable);
 
     if (!(count > 0)) {
-        throw new Error("Argument Error: Count must be positive number.");
+        throw new ArgumentError("Count must be positive number.");
     }
 
     try {
@@ -580,6 +585,7 @@ function reduce(func, iterable, init) {
 exports.Iterator = makeIteratorOf;
 exports.Array = toArray;
 exports.StopIteration = _StopIteration;
+exports.ArgumentError = ArgumentError;
 
 exports.count = count;
 exports.cycle = cycle;

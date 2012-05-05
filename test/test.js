@@ -120,12 +120,12 @@ describe("slice", function () {
   it('should require positive step', function () {
     assert.throws(function () {
       itertools.slice([0,1,2,3,4,5,6,7,8,9], 5, 6, -1);
-    }, Error);
+    }, itertools.ArgumentError);
   });
   it('should require positive range', function () {
     assert.throws(function () {
       itertools.slice([0,1,2,3,4,5,6,7,8,9], 5, -1, 5);
-    }, Error);
+    }, itertools.ArgumentError);
   });
 });
 

@@ -8,7 +8,12 @@
 
 */
 
-var _StopIteration = typeof StopIteration != 'undefined' ? StopIteration : "StopIteration";
+function __StopIteration() {
+  Error.apply(this, arguments);
+}
+__StopIteration.prototype = new Error();
+
+var _StopIteration = typeof StopIteration != 'undefined' ? StopIteration : __StopIteration;
 
 function _arrayForArguments(args) {
   return Array.prototype.slice.call(args);
@@ -72,7 +77,7 @@ function fromArray(array) {
         if (i < ii) {
             return _array[i++];
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
 
@@ -87,7 +92,7 @@ function toArray(iterator) {
             array[i++] = iterator.next();
         }
     } catch (error) {
-        if (error !== _StopIteration) {
+        if (!(error instanceof _StopIteration)) {
             throw error;
         }
     }
@@ -103,7 +108,7 @@ function fromString(string) {
         if (i < ii) {
             return string.charAt(i++);
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
 
@@ -150,13 +155,13 @@ function cycle(iterable) {
                 values.push(value);
                 return value;
             } catch (error) {
-                if (error === _StopIteration) {
+                if (error instanceof _StopIteration) {
                     if (values.length > 0) {
                         iterator = null;
                         i = 0;
                         ii = values.length;
                     } else {
-                        throw _StopIteration;
+                        throw new _StopIteration;
                     }
                 } else {
                     throw error;
@@ -183,7 +188,7 @@ function repeat(value, times) {
             i++;
             return value;
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
 
@@ -204,9 +209,9 @@ function chain() {
         try {
             return iterator.next();
         } catch (error) {
-            if (error === _StopIteration) {
+            if (error instanceof _StopIteration) {
                 if (iterators.length == 0) {
-                    throw _StopIteration;
+                    throw new _StopIteration;
                 } else {
                     iterator = makeIteratorOf(iterators.shift());
                     return this.next();
@@ -260,10 +265,10 @@ function takeWhile(test, iterable) {
                 return value;
             } else {
                 performedTake = true;
-                throw _StopIteration;
+                throw new _StopIteration;
             }
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
 
@@ -334,7 +339,7 @@ function slice() {
             phaseStep = next;
             return iterator.next();
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
     var next = function () {
@@ -345,7 +350,7 @@ function slice() {
             i++;
             return iterator.next();
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
 
@@ -463,12 +468,12 @@ function zipLongest() {
             try {
                 value = iterators[i] && iterators[i].next();
             } catch (error) {
-                if (error === _StopIteration) {
+                if (error instanceof _StopIteration) {
                     value = undefined;
                     iterators[i] = undefined;
                     exhausted--;
                     if (exhausted == 0) {
-                        throw _StopIteration;
+                        throw new _StopIteration;
                     }
                 } else {
                     throw error;
@@ -497,7 +502,7 @@ function roundrobin() {
             try {
                 return nexts.next()();
             } catch (error) {
-                if (error === _StopIteration) {
+                if (error instanceof _StopIteration) {
                     pending--;
                     nexts = cycle(slice(nexts, pending));
                     return this.next();
@@ -506,7 +511,7 @@ function roundrobin() {
                 }
             }
         } else {
-            throw _StopIteration;
+            throw new _StopIteration;
         }
     };
 
@@ -519,7 +524,7 @@ function all(iterable) {
         while (iterator.next()) {;}
         return false;
     } catch (error) {
-        if (error !== _StopIteration) {
+        if (!(error instanceof _StopIteration)) {
             throw error;
         }
     }
@@ -536,7 +541,7 @@ function some(iterable, count) {
         while (count > 0) {if (iterator.next()) {count--;}}
         return true;
     } catch (error) {
-        if (error !== _StopIteration) {
+        if (!(error instanceof _StopIteration)) {
             throw error;
         }
     }
@@ -548,7 +553,7 @@ function any(iterable) {
         while (!iterator.next()) { }
         return true;
     } catch (error) {
-        if (error !== _StopIteration) {
+        if (!(error instanceof _StopIteration)) {
             throw error;
         }
     }
@@ -565,7 +570,7 @@ function reduce(func, iterable, init) {
             result = func(result, value);
         }
     } catch (error) {
-        if (error !== _StopIteration) {
+        if (!(error instanceof _StopIteration)) {
             throw error;
         }
     }

@@ -17,14 +17,32 @@ function _arrayForArguments(args) {
 var _Iterator = function () {
 };
 
-_Iterator.prototype = {
-    '__iterator__': function () {
+_Iterator.prototype = (new function () {
+    function __iterator__() {
         return this;
-    },
-    'toString': function () {
+    }
+    function toString() {
         return '[object Iterator' + (this.type ? '(' + this.type + ')' : '') + ']';
     }
-};
+    this.__iterator__ = __iterator__;
+    this.toString = toString;
+
+    this.toArray = function () {
+      return toArray(this)
+    }
+    this.map = function () {
+      var args = _arrayForArguments;
+      args.unshift(this);
+      return map(args)
+    }
+
+    this.map = function () {
+      var args = _arrayForArguments;
+      args.unshift(this);
+      return map(args)
+    }
+
+}());
 
 function makeIteratorOf(object) {
     if (object == null) {
